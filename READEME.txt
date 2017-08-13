@@ -1,0 +1,31 @@
+
+Alex's Scripts
+
+
+__________NMZ.sh___________
+NMZ stand for nightmare zone.
+
+This script keep's my runescape character
+alive in the nightmare zone minigame for 
+around three and a half hours. It will run
+just fine on any computer with a screen
+resolution of at least 1060x710. (because
+that is the bottom right corner of my 
+farthest click in that direction)
+
+My first goal for this is to just get the 
+essential drinking of overload and absorbtion
+potions at the right times and clicking the
+prayer orb at the right times and randomizing
+it a little bit to make it look less like
+a program running it. I also want it to 
+shutdown my computer while I am still in the
+nightmare zone to log me out of the game.
+
+Later, I would like to allow myself to 
+finish the game and log out before shutting
+my computer down as well as logging my
+the time it was running and logging the 
+experience gained per hour and putting it
+all in a small log file.
+

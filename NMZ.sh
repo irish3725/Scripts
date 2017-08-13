@@ -93,5 +93,7 @@ while [[ $aNum -gt 0 || $oNum -gt 0 ]] ; do
     elif [[ $((dif%aTime)) != 0 && $a == 1 ]] ; then
         let 'a = 0'
     fi
+
+    #if time for pray flick
 done
 
