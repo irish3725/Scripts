@@ -9,6 +9,16 @@
 # arithmatic            x
 # float usage
 
+oTime=3
+aTime=2
+oNum=40
+aNum=64
+finished='FALSE'
+o=0
+a=0
+start=$(date +%s)
+xyRange=12
+
 ###invintory###
 #  0  1  2  3 #
 #  4  5  6  7 #
@@ -29,8 +39,12 @@ overload() {
     let 'slot=(dose/4)'
     let 'row=(slot/4)'
     let 'column=(slot%4)'
-    let 'x=(column*42)+933'
-    let 'y=(row*36)+490'
+    xdif=$RANDOM
+    ydif=$RANDOM
+    let 'xdif%=xyRange'
+    let 'ydif%=xyRange'
+    let 'x=(column*42)+933+xdif-(xyRange/2)'
+    let 'y=(row*36)+490+ydif-(xyRange/2)'
     echo 'dose='$dose
     echo 'slot='$slot
     echo 'row='$row
@@ -51,8 +65,12 @@ absorbtion() {
     let 'slot=(dose/4)+12'
     let 'row=(slot/4)'
     let 'column=(slot%4)'
-    let 'x=(column*42)+933'
-    let 'y=(row*36)+490'
+    xdif=$RANDOM
+    ydif=$RANDOM
+    let 'xdif%=xyRange'
+    let 'ydif%=xyRange'
+    let 'x=(column*42)+933+xdif-(xyRange/2)'
+    let 'y=(row*36)+490+ydif-(xyRange/2)'
     echo 'dose='$dose
     echo 'slot='$slot
     echo 'row='$row
@@ -62,15 +80,6 @@ absorbtion() {
     xdotool mousemove $x $y #click 1
     echo '-----end absorbtion------'
 }
-
-oTime=3
-aTime=2
-oNum=40
-aNum=64
-finished='FALSE'
-o=0
-a=0
-start=$(date +%s)
 
 while [[ $aNum -gt 0 || $oNum -gt 0 ]] ; do
     cur=$(date +%s)
@@ -87,7 +96,7 @@ while [[ $aNum -gt 0 || $oNum -gt 0 ]] ; do
 
     #if time for absorbtion
     if [[ $((dif%aTime)) == 0 && $a == 0 && $aNum > 0 ]] ; then
-        #absorbtion
+        absorbtion
         ((aNum--))
         let 'a = 1'
     elif [[ $((dif%aTime)) != 0 && $a == 1 ]] ; then
