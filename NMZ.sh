@@ -11,6 +11,8 @@
 
 oTime=3
 aTime=2
+oTimeOff=1
+oTimeOff=2
 oNum=40
 aNum=64
 finished='FALSE'
@@ -86,19 +88,23 @@ while [[ $aNum -gt 0 || $oNum -gt 0 ]] ; do
     dif=$((cur-start))
     
     #if time to overload
-    if [[ $((dif%oTime)) == 0 && $o == 0 && $oNum > 0 ]] ; then
+    if [[ $((dif%(oTime+oTimeOff))) == 0 && $o == 0 && $oNum > 0 ]] ; then
         overload
         ((oNum--))
         let 'o = 1'
+        oTimeOff=$RANDOM
+        let 'oTimeOff%=3'
     elif [[ $((dif%oTime)) != 0 && $o == 1 ]] ; then
         let 'o = 0'
     fi
 
     #if time for absorbtion
-    if [[ $((dif%aTime)) == 0 && $a == 0 && $aNum > 0 ]] ; then
+    if [[ $((dif%(aTime+aTimeOff))) == 0 && $a == 0 && $aNum > 0 ]] ; then
         absorbtion
         ((aNum--))
         let 'a = 1'
+        aTimeOff=$RANDOM
+        let 'aTimeOff%=3'
     elif [[ $((dif%aTime)) != 0 && $a == 1 ]] ; then
         let 'a = 0'
     fi
