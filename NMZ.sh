@@ -1,16 +1,8 @@
-#TODO:
-# variable assignment   x
-# while loop            x
-# variable reference    x
-# get time              x 
-# if statement          x
-# function declaration  x
-# function use          x
-# arithmatic            x
-# float usage
 
 oTime=3
 aTime=2
+oWait=$oTime
+aWait=$aTime
 oTimeOff=1
 oTimeOff=2
 oNum=40
@@ -20,6 +12,7 @@ o=0
 a=0
 start=$(date +%s)
 xyRange=12
+doAb=0
 
 ###invintory###
 #  0  1  2  3 #
@@ -55,6 +48,7 @@ overload() {
     echo 'y='$y
     xdotool mousemove $x $y click 1
     echo '------end overload-----'
+    sleep 3
 }
 
 # Usage:    absorbtion
@@ -62,25 +56,30 @@ overload() {
 # and keeps track of how many doses
 # have been taken.
 absorbtion() {
-    echo '-----begin absorbtion-----'
-    let 'dose=(64-aNum)'
-    let 'slot=(dose/4)+12'
-    let 'row=(slot/4)'
-    let 'column=(slot%4)'
-    xdif=$RANDOM
-    ydif=$RANDOM
-    let 'xdif%=xyRange'
-    let 'ydif%=xyRange'
-    let 'x=(column*42)+933+xdif-(xyRange/2)'
-    let 'y=(row*36)+490+ydif-(xyRange/2)'
-    echo 'dose='$dose
-    echo 'slot='$slot
-    echo 'row='$row
-    echo 'column='$column
-    echo 'x='$x
-    echo 'y='$y
-    xdotool mousemove $x $y #click 1
-    echo '-----end absorbtion------'
+    if [[ $doAb == 1 ]] ; then
+        echo '-----begin absorbtion-----'
+        let 'dose=(64-aNum)'
+        let 'slot=(dose/4)+12'
+        let 'row=(slot/4)'
+        let 'column=(slot%4)'
+        xdif=$RANDOM
+        ydif=$RANDOM
+        let 'xdif%=xyRange'
+        let 'ydif%=xyRange'
+        let 'x=(column*42)+933+xdif-(xyRange/2)'
+        let 'y=(row*36)+490+ydif-(xyRange/2)'
+        echo 'dose='$dose
+        echo 'slot='$slot
+        echo 'row='$row
+        echo 'column='$column
+        echo 'x='$x
+        echo 'y='$y
+        xdotool mousemove $x $y #click 1
+        echo '-----end absorbtion------'
+    else
+        let 'doAb = 1'
+    fi
+    sleep 3
 }
 
 while [[ $aNum -gt 0 || $oNum -gt 0 ]] ; do
@@ -88,23 +87,25 @@ while [[ $aNum -gt 0 || $oNum -gt 0 ]] ; do
     dif=$((cur-start))
     
     #if time to overload
-    if [[ $((dif%(oTime+oTimeOff))) == 0 && $o == 0 && $oNum > 0 ]] ; then
+    if [[ $(( dif >= oTime )) && $o == 0 && $oNum > 0 ]] ; then
         overload
         ((oNum--))
         let 'o = 1'
         oTimeOff=$RANDOM
         let 'oTimeOff%=3'
+        let 'oTime=oWait+oTimeOff'
     elif [[ $((dif%oTime)) != 0 && $o == 1 ]] ; then
         let 'o = 0'
     fi
 
     #if time for absorbtion
-    if [[ $((dif%(aTime+aTimeOff))) == 0 && $a == 0 && $aNum > 0 ]] ; then
+    if [[ $(( dif >= aTime )) && $a == 0 && $aNum > 0 ]] ; then
         absorbtion
         ((aNum--))
         let 'a = 1'
         aTimeOff=$RANDOM
         let 'aTimeOff%=3'
+        let 'aTime=aWait+aTimeOff'
     elif [[ $((dif%aTime)) != 0 && $a == 1 ]] ; then
         let 'a = 0'
     fi
