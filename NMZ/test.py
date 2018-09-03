@@ -1,14 +1,22 @@
 
 from utils import *
 
-#scrot()
-#loc = get_location('x')
-#print(loc)
-#mouse_move(loc)
-#click()
 
-print('logging out')
-log()
+# check logout
+logout()
+click()
+idle(1)
+mouse_move((5,5))
+scrot()
+check_end()
 
-#locations = ('o', 'a', 'p')
-#draw_squares(locations)
+# check get location
+get_location('o')
+get_location('a')
+get_location('p')
+get_location('as')
+get_location('os')
+get_location('x')
+get_location('b')
+
+

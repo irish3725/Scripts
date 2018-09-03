@@ -34,7 +34,6 @@ class NMZ():
         if self.dose_absorb > 0:
             # move mouse to and click this potion
             if not mouse_move(self.loc_absorb):
-                print('Not Mouse Move!!')
                 # if location is (-1,-1) then check to see if end
                 if chk_end():
                     # if end, wait 30 seconds, logout and end program
@@ -61,13 +60,10 @@ class NMZ():
         if self.dose_overload > 0:
             # move mouse to and click this potion
             if not mouse_move(self.loc_overload):
-                print('Not Mouse Move!!')
                 # if location is (-1,-1) then check to see if end
                 if chk_end():
-                    print('check_end was true')
                     # if end, wait 30 seconds, logout and end program
                     idle(uniform(200,300))
-                    print('idle done')
                     log()
                     self.end = True
                     return
